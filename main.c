@@ -29,7 +29,8 @@ void main() {
   unsigned long int k;
   for(k=0;k<ITERATIONS;k++) {
     //start of top half
-    mpz_ui_pow_ui(top,-1,k); //(-1)^k
+    mpz_set_si(top,-1L);
+    mpz_pow_ui(top,top,k); //(-1)^k
     mpz_fac_ui(tempi,(6UL * k)); //(6k)!
     mpz_mul(top,top,tempi); //(-1)^k * (6k)!
     mpz_set_ui(tempi,545140134UL);
