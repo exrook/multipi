@@ -1,5 +1,5 @@
 CC= gcc
-CFLAGS =
+CFLAGS = -g
 LDFLAGS = -lgmp
 SOURCES = main.c
 OBJECTS = $(SOURCES:.c=.o)
