@@ -19,7 +19,7 @@ void calcpi(mpf_t out, unsigned long int iterations) {
   mpf_t bottom2;
   mpz_t tempi;
   mpf_t tempf;
-  mpf_set_default_prec(65536UL);
+  mpf_set_default_prec(4194304UL);
   unsigned long int k;
   mpf_init(pi);
   mpf_set_si(pi,0L);
