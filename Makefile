@@ -1,11 +1,15 @@
 CC= gcc
-CFLAGS = -g -fopenmp
+CFLAGS = -g -O3 -fopenmp
 LDFLAGS = -lgmp -fopenmp
 SOURCES = main.c pi.c
 OBJECTS = $(SOURCES:.c=.o)
 EXECUTABLE = multipi
 
 all: $(SOURCES) $(EXECUTABLE)
+
+compute: compute.o pi.o
+	$(CC) $(LDFLAGS) -o $@ $^
+
 
 #build - compile my code
 $(EXECUTABLE): $(OBJECTS)

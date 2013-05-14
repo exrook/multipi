@@ -56,7 +56,7 @@ void calcpi(mpf_t out, unsigned long int iterations) {
       mpf_div(tempf,tempf,bottom2);// top/bottom
       #pragma omp critical
       {
-        printf("Thread %d adding to the total with iteration %d\n", omp_get_thread_num(), k);
+        fprintf(stderr,"Thread %d adding to the total with iteration %d\n", omp_get_thread_num(), k);
         mpf_add(pi,pi,tempf);
       }
 //    mpf_out_str(stdout,10,10,pi);

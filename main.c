@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
       length = (unsigned long) tmp;
     }
   }
-  printf("Completing %d iterations\n", iter);
+  fprintf(stderr,"Computing %d iterations\n", iter);
   mpf_set_default_prec(65536UL);
   mpf_init(pi);
   calcpi(pi,iter);
