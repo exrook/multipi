@@ -11,19 +11,20 @@
 // Pi         /         (3k)! * (k!)^3 * 640320^(3k+1.5)
 //           /____
 //            k=0
+#define PRECISION 4194304UL
 
-void calcpi(mpf_t out, unsigned long int iterations) {
-  mpf_t pi;
+void calcpartpi(mpf_t out, unsigned long int start, unsigned long int end) {
+  //mpf_t pi;
   mpz_t top;
   mpz_t bottom1;
   mpf_t bottom2;
   mpz_t tempi;
   mpf_t tempf;
-  mpf_set_default_prec(4194304UL);
+  mpf_set_default_prec(PRECISION);
   unsigned long int k;
-  mpf_init(pi);
-  mpf_set_si(pi,0L);
-  #pragma omp parallel shared(pi) private(top,bottom1,tempi,tempf,bottom2,k)
+  //mpf_init(pi);
+  //mpf_set_si(pi,0L);
+  #pragma omp parallel shared(out) private(top,bottom1,tempi,tempf,bottom2,k)
   {
     mpz_init(top);
     mpz_init(tempi);
@@ -31,7 +32,7 @@ void calcpi(mpf_t out, unsigned long int iterations) {
     mpz_init(bottom1);
     mpf_init(bottom2);
     #pragma omp for schedule(dynamic) nowait
-    for(k=0;k<=iterations;k++) {
+    for(k=start;k<=end;k++) {
       //start of top half
       mpz_set_si(top,-1L);
       mpz_pow_ui(top,top,k); //(-1)^k
@@ -57,9 +58,9 @@ void calcpi(mpf_t out, unsigned long int iterations) {
       #pragma omp critical
       {
         fprintf(stderr,"Thread %d adding to the total with iteration %d\n", omp_get_thread_num(), k);
-        mpf_add(pi,pi,tempf);
+        mpf_add(out,out,tempf);
       }
-//    mpf_out_str(stdout,10,10,pi);
+//    mpf_out_str(stdout,10,10,out);
 //    puts("\n");
     }
     mpf_clear(tempf);
@@ -69,8 +70,13 @@ void calcpi(mpf_t out, unsigned long int iterations) {
     mpz_clear(top);
     }
   #pragma omp taskwait
-  mpf_mul_ui(pi,pi,12UL);// sum * 12
-  mpf_ui_div(pi,1UL,pi); // inverse
-  mpf_swap(out,pi);
-  mpf_clear(pi);
+  //mpf_swap(out,pi);
 }
+
+void calcpi(mpf_t out, unsigned long int iterations) {
+  mpf_set_default_prec(PRECISION);
+  calcpartpi(out, 0UL,iterations);
+  mpf_mul_ui(out,out,12UL);// sum * 12
+  mpf_ui_div(out,1UL,out); // inverse
+}
+        
