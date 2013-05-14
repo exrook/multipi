@@ -1,5 +1,5 @@
 CC= gcc
-CFLAGS = -g
+CFLAGS = -g -fopenmp
 LDFLAGS = -lgmp
 SOURCES = main.c pi.c
 OBJECTS = $(SOURCES:.c=.o)
