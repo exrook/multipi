@@ -1,6 +1,6 @@
 CC= gcc
 CFLAGS = -g -fopenmp
-LDFLAGS = -lgmp
+LDFLAGS = -lgmp -fopenmp
 SOURCES = main.c pi.c
 OBJECTS = $(SOURCES:.c=.o)
 EXECUTABLE = multipi
