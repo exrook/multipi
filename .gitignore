@@ -1,2 +1,10 @@
 *.o
 multipi
+compute
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
+.ninja*
+build.ninja
+rules.ninja
+
